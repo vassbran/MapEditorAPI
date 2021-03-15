@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Demo</title>
+        <link rel ="icon" type ="image/x-icon" href="./assets/MapHero.png">
+        <link rel="stylesheet" href="style.css">
+
+        <!-- the following says there are javascript source code contained in 
+             the external source files
+        -->
+        <!-- external library -->
+        <script type="text/javascript" src="src/lib/gl-matrix.js"></script>
+        
+        <!-- Engine code -->
+        <!-- Core of Engine --> 
+        <script type="text/javascript" src="src/Engine/Core/Engine_Core.js"></script>
+        <script type="text/javascript" src="src/Engine/Core/Engine_VertexBuffer.js"></script>
+        <script type="text/javascript" src="src/Engine/Core/Engine_GameLoop.js"></script>
+        <script type="text/javascript" src="src/Engine/Core/Engine_Input.js"></script>
+        <!-- Resource support -->
+        <script type="text/javascript" src="src/Engine/Core/Resources/Engine_ResourceMap.js"></script>
+        <script type="text/javascript" src="src/Engine/Core/Resources/Engine_TextFileLoader.js"></script>
+        <script type="text/javascript" src="src/Engine/Core/Resources/Engine_DefaultResources.js"></script>
+
+        <script type="text/javascript" src="src/Engine/Core/Resources/Engine_Textures.js"></script>
+        <script type="text/javascript" src="src/Engine/Transform.js"></script>
+        <script type="text/javascript" src="src/Engine/Camera.js"></script>
+        <script type="text/javascript" src="src/Engine/Scene.js"></script>
+        <!-- Renderables -->
+        <script type="text/javascript" src="src/Engine/Renderables/Renderable.js"></script>
+        <script type="text/javascript" src="src/Engine/Renderables/TextureRenderable.js"></script>
+        <script type="text/javascript" src="src/Engine/Renderables/SpriteRenderable.js"></script>
+        <script type="text/javascript" src="src/Engine/Renderables/SpriteAnimateRenderable.js"></script>
+        
+        <!-- Shaders -->
+        <script type="text/javascript" src="src/Engine/Shaders/SimpleShader.js"></script>
+        <script type="text/javascript" src="src/Engine/Shaders/TextureShader.js"></script>
+        <script type="text/javascript" src="src/Engine/Shaders/SpriteShader.js"></script>
+        
+        <!-- API Code -->
+        <script type="text/javascript" src="src/Engine/Api/MapObject.js"></script>
+        <script type="text/javascript" src="src/Engine/Api/Map.js"></script>
+        <script type="text/javascript" src="src/Engine/Api/MapObjectSet.js"></script>
+        <script type="text/javascript" src="src/Engine/Api/Terrain.js"></script>
+        <script type="text/javascript" src="src/Engine/Api/TerrainSet.js"></script>
+        <script type="text/javascript" src="src/Engine/Api/MapSelector.js"></script>
+        <script type="text/javascript" src="src/Engine/Api/MapHero.js"></script>
+
+        <!-- Client game code -->
+        <script type="text/javascript" src="src/MyGame/MyGame.js"></script>
+        
+
+        <script>
+            function picSourceChange(str) {
+                localStorage.setItem('picSource', str);
+            }
+
+            function terrainSourceChange(str) {
+                localStorage.setItem('terrainSource', str);
+            }
+            var myGame = new MyGame();
+            
+    </script>
+    </head>
+    
+    <body onload="
+        gEngine.Core.initializeEngineCore('GLCanvas', myGame);
+     ">
+        <div class="flex-container">
+        <canvas id="GLCanvas" width="600" height="600">
+            <!-- GLCanvas is the area we will draw in: a 640x480 area. -->
+            Your browser does not support the HTML5 canvas.
+            <!-- this message will show only if WebGL clearing failed -->
+        </canvas>
+        <div class="table-container">
+    
+        <button class="deleteButton" id="delete" onclick="myGame.mMap.toggleDelete()">Delete/Creation Mode</button>
+        <button class="terrainButton" id="terrain" onclick="myGame.mMap.toggleTerrain()">Terrain Mode</button>
+        
+        <button class="editButton" id="edit" onclick="myGame.mMap.toggleEdit()">Edit Mode On/Off</button>
+        <button class="clearButton" id="clear" onclick="myGame.mMap.clearMap()">Clear Map</button>
+        <button class="saveButton" id="save" onclick="myGame.mMap.saveMap('map1')">Save Map</button>
+        <button class="newButton" id="new" onclick="gEngine.GameLoop.stop();">New Map</button>
+        
+        <div class="name">Terrain</div>
+        <div class="terrain-container">
+        <table class="terrain-table">
+        <tr>
+            <td><button id="dirt2" onclick="terrainSourceChange('assets/MapTextures/dirt2.png')"><img src="assets/MapTextures/dirt2.png"></button></td>
+            <td><button id="grass1" onclick="terrainSourceChange('assets/MapTextures/grass1.png')"><img src="assets/MapTextures/grass1.png"</button></td>
+        </tr>
+        <tr>
+            <td><button id="lava1" onclick="terrainSourceChange('assets/MapTextures/lava1.png')"><img src="assets/MapTextures/lava1.png"></button></td>
+            <td><button id="stone1" onclick="terrainSourceChange('assets/MapTextures/stone1.png')"><img src="assets/MapTextures/stone1.png"</button></td>
+        </tr>
+        <tr>
+            <td><button id="water1" onclick="terrainSourceChange('assets/MapTextures/water1.png')"><img src="assets/MapTextures/water1.png"></button></td>
+        </tr>
+        </table>
+        </div>
+        <div class="name">Object</div>
+        <div class="object-container">
+        <table>
+        <tr>
+            <td><button id="tree" onclick="picSourceChange('assets/tree.png')"><img src="assets/tree.png"></button></td>
+            <td><button id="house"onclick="picSourceChange('assets/house.png')"><img src="assets/house.png"></button></td>   
+        </tr>
+        <tr>
+            <td><button id="flowers"onclick="picSourceChange('assets/flowers.png')"><img src="assets/flowers.png"></button></td>
+        </tr>
+        </table>
+        </div>
+        </div>
+        </div>
+        <a href="index2.html"><button class="index">Demo 2</button></a>
+        <a href="MapEditorApiDocumentation.html"><button class="apiButton">API Document</button></a>
+        <span id='CurMode'></span>
+        <div class="instruction-container">
+        <div>
+        <b>Press "H" to place and move the first Hero</b><br>
+        <b>Press "P" to place and move the second Hero</b><br>
+        <b>Press "Space" switch to create/delete object</b><br>
+        </div>
+        <div>
+        
+        
+        </div>
+        </div>
+        <script>
+            var gCurMode = function(mode)
+            {
+                var elm = document.getElementById("CurMode");
+                elm.innerHTML = "<b>Current Mode: </b>" + mode;
+            };
+            
+        </script>
+        
+    </body>
+</html>
