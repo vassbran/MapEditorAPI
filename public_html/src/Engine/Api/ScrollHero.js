@@ -116,7 +116,7 @@ ScrollHero.prototype.Jump = function()
         oCheck = this.mMap.getTileMapObject(hXForm.getXPos(),headCheck);
         if(oCheck === null || oCheck.getPassability())
         {
-            this.mHero.getXform().incYPosBy(1.1 * this.mYSize); 
+            this.mHero.getXform().incYPosBy(1.2 * this.mYSize); 
         }
     } 
 };
