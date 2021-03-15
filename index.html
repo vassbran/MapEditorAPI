@@ -1,139 +1,116 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>Demo</title>
-        <link rel ="icon" type ="image/x-icon" href="./assets/MapHero.png">
-        <link rel="stylesheet" href="style.css">
-
-        <!-- the following says there are javascript source code contained in 
-             the external source files
-        -->
-        <!-- external library -->
-        <script type="text/javascript" src="src/lib/gl-matrix.js"></script>
-        
-        <!-- Engine code -->
-        <!-- Core of Engine --> 
-        <script type="text/javascript" src="src/Engine/Core/Engine_Core.js"></script>
-        <script type="text/javascript" src="src/Engine/Core/Engine_VertexBuffer.js"></script>
-        <script type="text/javascript" src="src/Engine/Core/Engine_GameLoop.js"></script>
-        <script type="text/javascript" src="src/Engine/Core/Engine_Input.js"></script>
-        <!-- Resource support -->
-        <script type="text/javascript" src="src/Engine/Core/Resources/Engine_ResourceMap.js"></script>
-        <script type="text/javascript" src="src/Engine/Core/Resources/Engine_TextFileLoader.js"></script>
-        <script type="text/javascript" src="src/Engine/Core/Resources/Engine_DefaultResources.js"></script>
-
-        <script type="text/javascript" src="src/Engine/Core/Resources/Engine_Textures.js"></script>
-        <script type="text/javascript" src="src/Engine/Transform.js"></script>
-        <script type="text/javascript" src="src/Engine/Camera.js"></script>
-        <script type="text/javascript" src="src/Engine/Scene.js"></script>
-        <!-- Renderables -->
-        <script type="text/javascript" src="src/Engine/Renderables/Renderable.js"></script>
-        <script type="text/javascript" src="src/Engine/Renderables/TextureRenderable.js"></script>
-        <script type="text/javascript" src="src/Engine/Renderables/SpriteRenderable.js"></script>
-        <script type="text/javascript" src="src/Engine/Renderables/SpriteAnimateRenderable.js"></script>
-        
-        <!-- Shaders -->
-        <script type="text/javascript" src="src/Engine/Shaders/SimpleShader.js"></script>
-        <script type="text/javascript" src="src/Engine/Shaders/TextureShader.js"></script>
-        <script type="text/javascript" src="src/Engine/Shaders/SpriteShader.js"></script>
-        
-        <!-- API Code -->
-        <script type="text/javascript" src="src/Engine/Api/MapObject.js"></script>
-        <script type="text/javascript" src="src/Engine/Api/Map.js"></script>
-        <script type="text/javascript" src="src/Engine/Api/MapObjectSet.js"></script>
-        <script type="text/javascript" src="src/Engine/Api/Terrain.js"></script>
-        <script type="text/javascript" src="src/Engine/Api/TerrainSet.js"></script>
-        <script type="text/javascript" src="src/Engine/Api/MapSelector.js"></script>
-        <script type="text/javascript" src="src/Engine/Api/MapHero.js"></script>
-
-        <!-- Client game code -->
-        <script type="text/javascript" src="src/MyGame/MyGame.js"></script>
-        
-
-        <script>
-            function picSourceChange(str) {
-                localStorage.setItem('picSource', str);
-            }
-
-            function terrainSourceChange(str) {
-                localStorage.setItem('terrainSource', str);
-            }
-            var myGame = new MyGame();
-            
-    </script>
-    </head>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <style>
+    /* Remove the navbar's default margin-bottom and rounded borders */ 
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+    }
     
-    <body onload="
-        gEngine.Core.initializeEngineCore('GLCanvas', myGame);
-     ">
-        <div class="flex-container">
-        <canvas id="GLCanvas" width="600" height="600">
-            <!-- GLCanvas is the area we will draw in: a 640x480 area. -->
-            Your browser does not support the HTML5 canvas.
-            <!-- this message will show only if WebGL clearing failed -->
-        </canvas>
-        <div class="table-container">
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+    .row.content {height: 800px}
     
-        <button class="deleteButton" id="delete" onclick="myGame.mMap.toggleDelete()">Delete/Creation Mode</button>
-        <button class="terrainButton" id="terrain" onclick="myGame.mMap.toggleTerrain()">Terrain Mode</button>
-        
-        <button class="editButton" id="edit" onclick="myGame.mMap.toggleEdit()">Edit Mode On/Off</button>
-        <button class="clearButton" id="clear" onclick="myGame.mMap.clearMap()">Clear Map</button>
-        <button class="saveButton" id="save" onclick="myGame.mMap.saveMap('map1')">Save Map</button>
-        <button class="newButton" id="new" onclick="gEngine.GameLoop.stop();">New Map</button>
-        
-        <div class="name">Terrain</div>
-        <div class="terrain-container">
-        <table class="terrain-table">
-        <tr>
-            <td><button id="dirt2" onclick="terrainSourceChange('assets/MapTextures/dirt2.png')"><img src="assets/MapTextures/dirt2.png"></button></td>
-            <td><button id="grass1" onclick="terrainSourceChange('assets/MapTextures/grass1.png')"><img src="assets/MapTextures/grass1.png"</button></td>
-        </tr>
-        <tr>
-            <td><button id="lava1" onclick="terrainSourceChange('assets/MapTextures/lava1.png')"><img src="assets/MapTextures/lava1.png"></button></td>
-            <td><button id="stone1" onclick="terrainSourceChange('assets/MapTextures/stone1.png')"><img src="assets/MapTextures/stone1.png"</button></td>
-        </tr>
-        <tr>
-            <td><button id="water1" onclick="terrainSourceChange('assets/MapTextures/water1.png')"><img src="assets/MapTextures/water1.png"></button></td>
-        </tr>
-        </table>
-        </div>
-        <div class="name">Object</div>
-        <div class="object-container">
-        <table>
-        <tr>
-            <td><button id="tree" onclick="picSourceChange('assets/tree.png')"><img src="assets/tree.png"></button></td>
-            <td><button id="house"onclick="picSourceChange('assets/house.png')"><img src="assets/house.png"></button></td>   
-        </tr>
-        <tr>
-            <td><button id="flowers"onclick="picSourceChange('assets/flowers.png')"><img src="assets/flowers.png"></button></td>
-        </tr>
-        </table>
-        </div>
-        </div>
-        </div>
-        <a href="index2.html"><button class="index">Demo 2</button></a>
-        <a href="MapEditorApiDocumentation.html"><button class="apiButton">API Document</button></a>
-        <span id='CurMode'></span>
-        <div class="instruction-container">
-        <div>
-        <b>Press "H" to place and move the first Hero</b><br>
-        <b>Press "P" to place and move the second Hero</b><br>
-        <b>Press "Space" switch to create/delete object</b><br>
-        </div>
-        <div>
-        
-        
-        </div>
-        </div>
-        <script>
-            var gCurMode = function(mode)
-            {
-                var elm = document.getElementById("CurMode");
-                elm.innerHTML = "<b>Current Mode: </b>" + mode;
-            };
-            
-        </script>
-        
-    </body>
+    /* Set gray background color and 100% height */
+    .sidenav {
+      padding-top: 20px;
+      background-color: #f1f1f1;
+      height: 100%;
+    }
+    
+    /* Set black background color, white text and some padding */
+    footer {
+      background-color: #555;
+      color: white;
+      padding: 15px;
+    }
+
+    li{
+      margin-left:25px;
+      margin-right:25px;
+      margin-bottom: 10px;
+      font-size: 1.7rem;
+    }
+
+    h1{
+      margin-left:50px;
+      margin-bottom: 20px;
+    }
+
+    h3{
+      margin-left:50px;
+    }
+    
+    /* On small screens, set height to 'auto' for sidenav and grid */
+  </style>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#">Team 5</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li><a href="MapEditorAPIDocumentation.html">API Docuement</a></li>
+        <li><a href="Tutorial.html">Tutorial</a></li>
+        <li><a href="https://vassbran.github.io/MapEditorAPI/public_html/index.html">Demo</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+  
+<div class="container-fluid text-center">    
+  <div class="row content">
+    <div class="col-sm-2 sidenav">
+      <p><a href="MapEditorAPIDocumentation.html">API Document</a></p>
+      <p><a href="Tutorial.html">Tutorial</a></p>
+      <p><a href="https://vassbran.github.io/MapEditorAPI/public_html/index.html">Demo</a></p>
+    </div>
+    <div class="col-sm-8 text-left"> 
+      <h1>Map Editor API</h1>
+      <h3>Description</h2>
+      <ul>
+      <li>The Map Editor API is designed to give the user the ability to create a map editor that is suitable for the game they want to integrate it in.</li>
+
+
+      <li>It provides functions that will allow for users to create and delete interactable map objects as well as modify the terrain in the map. There are also multiple functions that manage whether or not a map object and terrain texture can be traversable or not. Additionally, this API will allow for the user to change the size of the map they are working with.</li>
+
+
+      <li>Map.js is a map object that sets the dimensions and center of the map, allowing the user to be able to select what size of map they want to work with. This also handles all user inputs of creating/deleting objects and allows for the user to save/load a certain map.</li>
+
+
+      <li>MapObject.js is a texture renderable that acts as an object that can be placed anywhere on the map, dependending on the traversability of the terrain. This handles where they are placed on the map and whether or not they are passable.</li>
+
+
+      <li>MapObjectSet.js is used to keep track of all the map objects placed on the map.</li>
+
+
+      <li>MapSelector.js is a selector object that is an indicator on the map portraying where the selected map object or terrain will be created/deleted. This selector is bounded by the map.</li>
+
+
+      <li>Terrain.js is a texture renderable that acts as a terrain object and can be placed anywhere on the map. This handles where they are placed on the map and whether or not they are traversable.</li>
+
+
+      <li>TerrainSet.js is used to keep track of all the terrain objects placed on the map.</li>
+      </ul>
+      <hr>
+    </div>
+    <div class="col-sm-2 sidenav">
+    </div>
+  </div>
+</div>
+</body>
 </html>
